@@ -1,0 +1,107 @@
+<script>
+function ListNode(val,next) {
+   this.val = val;
+   this.next = next;
+};
+
+function list(arr) {
+    let head = new ListNode("header");
+    let tail = head;
+    for(let i = 0; i < arr.length; i++) {
+        let node = new ListNode(arr[i]);
+        tail.next = node;
+        tail = node;
+    }
+    return head.next;
+}
+
+function findPrev(node, list) {
+    if (!node) {
+        return;
+    }
+    let head = list;
+    while(head.next && head.next != node) {
+        head = head.next;
+    }
+    if (!head.next) {
+        return -1;
+    }
+    return head;
+}
+
+function find(node, list) {
+    if (!node) {
+        return;
+    }
+    let head = list;
+    while(head && head != node) {
+        head = head.next;
+    }
+    if (!head) {
+        return -1;
+    }
+    return head;
+}
+
+function insertBefore(out, listNode, list) {
+    if (!list) {
+        return;
+    }
+    let prevNode = findPrev(listNode, list);
+    out.next = prevNode.next;
+    prevNode.next = out;
+}
+
+function insert(out, listNode, list) {
+    if (!list) {
+        return;
+    }
+    let node = find(listNode, list);
+    out.next = node.next;
+    node.next = out;
+}
+
+var copyRandomList = function(head) {
+    let cnt = 1;
+    let newHead = new ListNode("head");
+    let newHeadInit = newHead;
+    while(head) {
+        let node = new ListNode(head.val);
+        newHead.next = node;
+        newHead = node;
+        
+    }
+};
+
+var oddEvenList = function(head) {
+    if (!head) return null;
+    let headInit = head;
+    let back = head;
+    let prev = new ListNode("prev");
+    prev.next = head;
+    if (head.next) {
+        head = head.next.next;
+    } else {
+        head = null;
+    }
+    prev = prev.next.next;
+    while(head) {
+        let node = head;
+        if (head.next) {
+            head = head.next.next;
+        } else {
+            head = null;
+        }
+        let prevNode = prev;
+        prev = prev.next.next;
+        prevNode.next = prevNode.next.next;
+        node.next = back.next;
+        back.next = node;
+        back = back.next;
+    }
+    return headInit;
+};
+
+
+console.log(oddEvenList(list([2,1,3,5,6,4,7])));
+</script>
